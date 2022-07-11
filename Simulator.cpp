@@ -32,10 +32,11 @@ int main(int argc, char** argv)
         simulation->UndoProbeAllGates();
     if (argc >= 3 && "json" == std::string(argv[2]))
     {
+        bool isPretty = false;
         boost::property_tree::ptree simResult = simulation->GetJson();
         std::ofstream output("circuit.jsonp", std::ios::out);
         output << "onJsonp(";
-        boost::property_tree::write_json(output, simResult);
+        boost::property_tree::write_json(output, simResult,isPretty);
         output << ");\n";
     }
     simulation->PrintProbes(std::cout);
