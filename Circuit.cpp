@@ -6,7 +6,7 @@ Args:
 	name: A unique string used to identify the truth table.
 	output_list: A list of outputs for the truth table.
 */
-void Circuit::AddTruthTable(std::string type, std::vector<int> outputs)
+void Circuit::AddTruthTable(const std::string &type, const std::vector<int> &outputs)
 {
 	if (m_truthTables.find(type) != m_truthTables.end())
 		throw std::runtime_error("Truth table name already used");
@@ -23,7 +23,7 @@ Args:
 	delay: The gate's delay from an input transition to an output
 		transition.
 */
-void Circuit::AddGateType(std::string name, std::string truthTableName, int delay)
+void Circuit::AddGateType(const std::string &name, const std::string &truthTableName, int delay)
 {
 	if (m_gateTypes.find(name) != m_gateTypes.end())
 		throw std::runtime_error("Gate type name already used");
@@ -42,7 +42,7 @@ Args:
 		to this gate's inputs.
 
 */
-void Circuit::AddGate(std::string name, std::string typeName, std::vector<std::string> inputNames)
+void Circuit::AddGate(const std::string &name, const std::string &typeName, const std::vector<std::string> &inputNames)
 {
 	if (m_gates.find(name) != m_gates.end())
 		throw std::runtime_error("Gate name already used");
@@ -56,7 +56,7 @@ void Circuit::AddGate(std::string name, std::string typeName, std::vector<std::s
 	}
 }
 
-void Circuit::AddProbe(std::string gateName)
+void Circuit::AddProbe(const std::string &gateName)
 {
 	auto& gate = m_gates[gateName];
 	gate.Probe();

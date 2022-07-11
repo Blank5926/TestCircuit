@@ -14,6 +14,12 @@ struct Transition
 			return objectId < other.objectId;
 		return time < other.time ;
 	}
+	bool operator>(const Transition& other) const noexcept
+	{
+		if (time == other.time)
+			return objectId > other.objectId;
+		return time > other.time;
+	}
 	bool IsValid() const noexcept {  return gate->GetOutput() != newOutput; }
 	void Apply();
 	Gate* gate;

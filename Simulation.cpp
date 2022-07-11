@@ -117,27 +117,23 @@ void Simulation::LayoutFromFile(std::ifstream& is)
 int Simulation::Step()
 {
 	int stepTime = m_queue.min()->time;
-	std::vector<Transition> transitions;
 	while (m_queue.len() > 0 && m_queue.min()->time == stepTime)
 	{
-		auto transition = m_queue.pop();
+		m_queue.pop();
+		auto transition = m_queue.min();
 		if (!transition->IsValid())
 			continue;
 		transition->Apply();
 		if (transition->gate->IsProbed())
 			m_probes.emplace_back(Probe{ transition->time, transition->gate->GetName(), transition->newOutput });
-		transitions.emplace_back(*transition);
-	}
-
-	for (const auto transition : transitions)
-	{
-		for (auto* gate : transition.gate->GetOutGates())
+		for (auto* gate : transition->gate->GetOutGates())
 		{
 			auto output = gate->GetTransitionOutput();
 			auto time = gate->GetTransitionTime(stepTime);
 			m_queue.append(Transition(gate, output, time));
 		}
 	}
+
 	return stepTime;
 }
 
@@ -178,7 +174,7 @@ void Simulation::PrintProbes(std::ostream& os)
 	{
 		if (!m_circuit->GetGate(probe.gateName)->IsProbed())
 			continue;
-		os << probe.time << " " << probe.gateName << " " << probe.newValue << std::endl;
+		os << probe.time << " " << probe.gateName << " " << probe.newValue << '\n';
 	}
-		
+	os << std::flush;
 }

@@ -7,7 +7,7 @@
 class TruthTable
 {
 public:
-    TruthTable() {}
+    TruthTable() :m_name(""), m_table({}), m_inputCount(0) {};
     TruthTable(std::string name, std::vector<int> outputs) : m_name(name), m_table(outputs)
     {
         if (outputs.size() != 2 && outputs.size() != 4)
@@ -17,7 +17,7 @@ public:
         else
             m_inputCount = 2;
     }
-    int GetOutput(std::vector<int> inputs) const;
+    int GetOutput(const std::vector<int>& inputs) const;
     std::string GetName() const
     {
         return m_name;

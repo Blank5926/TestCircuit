@@ -10,11 +10,11 @@
 class Circuit
 {
 public:
-	void AddTruthTable(std::string type, std::vector<int> outputs);
-	void AddGateType(std::string name, std::string truthTableName, int delay);
-	void AddGate(std::string name, std::string typeName, std::vector<std::string> inputNames);
-	void AddProbe(std::string gateName);
-	Gate* GetGate(std::string gateName) { return &(m_gates[gateName]); }
+	void AddTruthTable(const std::string &type, const std::vector<int> &outputs);
+	void AddGateType(const std::string &name, const std::string &truthTableName, int delay);
+	void AddGate(const std::string &name, const std::string &typeName, const std::vector<std::string> &inputNames);
+	void AddProbe(const std::string &gateName);
+	Gate* GetGate(const std::string &gateName) { return &(m_gates[gateName]); }
 	std::vector<Gate*> ProbeAllGates();
 	boost::property_tree::ptree GetJson();
 private:
